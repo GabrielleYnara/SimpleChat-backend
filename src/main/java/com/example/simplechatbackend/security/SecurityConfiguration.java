@@ -50,7 +50,7 @@ public class SecurityConfiguration {
                 .csrf().disable() // Disable CSRF protection
                 .headers().frameOptions().disable(); // Disable frame options
         http.cors(); // Enable CORS (Cross-Origin Resource Sharing)
-        http.addFilterBefore(JwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Add JWT filter
+        http.addFilterBefore(authJwtRequestFilter(), UsernamePasswordAuthenticationFilter.class); // Add JWT filter
         return http.build();
     }
 
