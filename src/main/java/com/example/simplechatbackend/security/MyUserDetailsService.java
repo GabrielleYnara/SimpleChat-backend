@@ -1,4 +1,37 @@
 package com.example.simplechatbackend.security;
 
-public class MyUserDetailsService {
+import com.example.simplechatbackend.model.User;
+import com.example.simplechatbackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyUserDetailsService implements UserDetailsService {
+
+    private UserService userService;
+
+    /**
+     * Injects an instance of UserService in MyUserDetailsService
+     * @param userService Service used to access a User from the database.
+     */
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * Associates a specific User from the database with this instance by using UserService
+     * and the User's username, passed in from a Http request.
+     * @param username Passed in from a Http request.
+     * @return An instance of UserDetails, containing details from the database.
+     * @throws UsernameNotFoundException If User with username not found in the database.
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userService.findUserByUsername(username);
+        return new MyUserDetails(user);
+    }
 }
