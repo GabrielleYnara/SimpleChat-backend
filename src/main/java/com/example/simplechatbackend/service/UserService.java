@@ -14,8 +14,4 @@ public class UserService {
     private RoomRepository roomRepository;
 
     private ChatRepository chatRepository;
-
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
-    }
 }

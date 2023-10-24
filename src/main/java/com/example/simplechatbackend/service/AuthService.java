@@ -1,5 +1,6 @@
 package com.example.simplechatbackend.service;
 
+import com.example.simplechatbackend.model.User;
 import com.example.simplechatbackend.model.request.LoginRequest;
 import com.example.simplechatbackend.repository.UserRepository;
 import com.example.simplechatbackend.security.JWTUtils;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class AuthService {
@@ -25,6 +27,8 @@ public class AuthService {
     private final JWTUtils jwtUtils;
 
     private final AuthenticationManager authenticationManager;
+
+    Logger logger  = Logger.getLogger(AuthService.class.getName());
 
     @Autowired
     public AuthService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder,
@@ -47,5 +51,9 @@ public class AuthService {
         } catch (Exception e) {
             return Optional.empty();
         }
+    }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }
