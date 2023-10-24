@@ -59,7 +59,7 @@ public class AuthService {
     }
 
     public Optional<User> createUser(User user) {
-        if (findUserByUsername(user.getUsername()) != null) {
+        if (findUserByUsername(user.getUsername()) == null) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             return Optional.of(userRepository.save(user));
         } else {

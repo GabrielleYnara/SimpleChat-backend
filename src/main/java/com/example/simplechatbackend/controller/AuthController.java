@@ -43,8 +43,8 @@ public class AuthController {
         Optional<User> newUser = authService.createUser(user);
 
         if(newUser.isPresent()) {
-            message.put("message", "Sucessfully registered new User: " + user.getUsername());
-            message.put("data", newUser);
+            message.put("message", "Successfully registered new User: " + user.getUsername());
+            message.put("data", newUser.get());
             return new ResponseEntity<>(message, HttpStatus.CREATED);
         } else {
             message.put("message", "User with username " + user.getUsername() + " already exists.");
