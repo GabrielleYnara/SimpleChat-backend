@@ -1,7 +1,6 @@
 package definitions;
 
 import com.example.simplechatbackend.SimpleChatBackendApplication;
-import com.fasterxml.jackson.core.JacksonException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -15,14 +14,8 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
-import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 @CucumberContextConfiguration
@@ -41,6 +34,7 @@ public class AuthControllerTestDefs {
     @Given("The User tries to log in with a username and password combo that exists in the database")
     public void userTriesToLogin() throws JSONException {
         logger.info("Calling: The User tries to log in with a username and password combo that exists in the database");
+
         try {
             RestAssured.baseURI = BASE_URL;
             RequestSpecification request = RestAssured.given();
@@ -60,12 +54,29 @@ public class AuthControllerTestDefs {
 
     @Then("The User is logged in and receives a JWT")
     public void userReceivesJWT() throws JSONException {
-        try {
-            logger.info("Calling: The User is logged in and receives a JWT");
+        logger.info("Calling: The User is logged in and receives a JWT");
 
+        try {
             JsonPath jsonPath = response.jsonPath();
 
             Assert.assertNotEquals(jsonPath.get("jwt"), ("Authentication Failed"));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("A new User registers for an account")
+    public void registerNewUser() throws JSONException {
+        try {
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("username", "bobmyers");
+            requestBody.put("password", "password1");
+            request.header("Content-Type", "application/json");
+
+            response = request.body(requestBody.toString()).post(BASE_URL+port+"/auth/register");
+
+            Assert.assertEquals(200, response.getStatusCode());
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
