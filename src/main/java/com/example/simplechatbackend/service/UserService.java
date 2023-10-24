@@ -16,5 +16,6 @@ public class UserService {
     private ChatRepository chatRepository;
 
     public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
     }
 }
