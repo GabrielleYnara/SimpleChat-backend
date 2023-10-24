@@ -3,9 +3,11 @@ package definitions;
 import com.example.simplechatbackend.SimpleChatBackendApplication;
 import com.fasterxml.jackson.core.JacksonException;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONException;
@@ -19,6 +21,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 @CucumberContextConfiguration
@@ -46,9 +50,23 @@ public class AuthControllerTestDefs {
             request.header("Content-Type", "application/json");
 
             response = request.body(requestBody.toString()).post(BASE_URL+port+"/auth/login");
+
             Assert.assertEquals(200, response.getStatusCode());
         }
         catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("The User is logged in and receives a JWT")
+    public void userReceivesJWT() throws JSONException {
+        try {
+            logger.info("Calling: The User is logged in and receives a JWT");
+
+            JsonPath jsonPath = response.jsonPath();
+
+            Assert.assertNotEquals(jsonPath.get("jwt"), ("Authentication Failed"));
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
     }
