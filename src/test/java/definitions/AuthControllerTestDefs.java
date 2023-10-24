@@ -67,16 +67,31 @@ public class AuthControllerTestDefs {
 
     @When("A new User registers for an account")
     public void registerNewUser() throws JSONException {
+        logger.info("Calling: A new User registers for an account");
+
         try {
             RequestSpecification request = RestAssured.given();
             JSONObject requestBody = new JSONObject();
-            requestBody.put("username", "bobmyers");
-            requestBody.put("password", "password1");
+            requestBody.put("username", "jimmymyers");
+            requestBody.put("password", "password3");
             request.header("Content-Type", "application/json");
 
             response = request.body(requestBody.toString()).post(BASE_URL+port+"/auth/register");
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 
-            Assert.assertEquals(200, response.getStatusCode());
+    @Then("The new User is saved to the database")
+    public void newUserSaved() throws JSONException {
+        logger.info("Calling: The new User is saved to the database");
+        try {
+            Assert.assertEquals(201, response.getStatusCode());
+
+            JsonPath jsonPath = response.jsonPath();
+
+            Assert.assertEquals(jsonPath.get("message"), ("Successfully registered new User: jimmymyers"));
+            Assert.assertNotNull(jsonPath.get("data"));
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
