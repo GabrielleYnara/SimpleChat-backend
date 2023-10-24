@@ -1,6 +1,7 @@
 package com.example.simplechatbackend.security;
 
 import com.example.simplechatbackend.model.User;
+import com.example.simplechatbackend.service.AuthService;
 import com.example.simplechatbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
-    private UserService userService;
+    private AuthService authService;
 
     /**
      * Injects an instance of UserService in MyUserDetailsService
      * @param userService Service used to access a User from the database.
      */
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUserService(AuthService authService) {
+        this.authService = authService;
     }
 
     /**
@@ -31,7 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.findUserByUsername(username);
+        User user = authService.findUserByUsername(username);
         return new MyUserDetails(user);
     }
 }
