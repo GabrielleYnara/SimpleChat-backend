@@ -1,5 +1,6 @@
 package com.example.simplechatbackend.service;
 
+import com.example.simplechatbackend.model.User;
 import com.example.simplechatbackend.repository.ChatRepository;
 import com.example.simplechatbackend.repository.RoomRepository;
 import com.example.simplechatbackend.repository.UserRepository;
@@ -13,4 +14,7 @@ public class UserService {
     private RoomRepository roomRepository;
 
     private ChatRepository chatRepository;
+
+    public User findUserByUsername(String username) {
+    }
 }
