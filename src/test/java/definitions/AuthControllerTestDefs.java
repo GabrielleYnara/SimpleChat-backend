@@ -96,4 +96,29 @@ public class AuthControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Then("The new User is able to log in and receives a JWT")
+    public void newUserReceivesJWT() throws JSONException {
+        logger.info("Calling: The new User is able to log in and receives a JWT");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("username", "jimmymyers");
+            requestBody.put("password", "password3");
+            request.header("Content-Type", "application/json");
+
+            response = request.body(requestBody.toString()).post(BASE_URL+port+"/auth/login");
+
+            Assert.assertEquals(200, response.getStatusCode());
+
+            JsonPath jsonPath = response.jsonPath();
+
+            Assert.assertNotEquals(jsonPath.get("jwt"), ("Authentication Failed"));
+        }
+        catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
