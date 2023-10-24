@@ -6,3 +6,7 @@ Feature: AuthController Endpoints Test
     When A new User registers for an account
     Then The new User is saved to the database
     Then The new User is able to log in and receives a JWT
+# Todo   When A User tries to log in with the wrong username and password combo
+#    Then The User receives a authorization error
+#    When A User tries to register with an existing username
+#    Then The User receives a conflict error
