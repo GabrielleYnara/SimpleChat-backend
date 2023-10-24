@@ -1,5 +1,6 @@
 package com.example.simplechatbackend.service;
 
+import com.example.simplechatbackend.exception.InformationAlreadyExistsException;
 import com.example.simplechatbackend.model.User;
 import com.example.simplechatbackend.model.request.LoginRequest;
 import com.example.simplechatbackend.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +41,9 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
 
+    public User findUserByUsername(String username) {
+        return userRepository.findUserByUsername(username);
+    }
 
     public Optional<String> loginUser(LoginRequest loginRequest) {
         UsernamePasswordAuthenticationToken authenticationToken =
@@ -53,7 +58,12 @@ public class AuthService {
         }
     }
 
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public Optional<User> createUser(User user) {
+        if (findUserByUsername(user.getUsername()) != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return Optional.of(userRepository.save(user));
+        } else {
+            throw new InformationAlreadyExistsException("User with username " + user.getUsername() + " already exists.");
+        }
     }
 }
