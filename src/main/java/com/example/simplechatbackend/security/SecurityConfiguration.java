@@ -40,7 +40,7 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/auth/login/", "/auth/register/").permitAll() // Allow login and registration without authentication
+                .antMatchers("/auth/login", "/auth/register").permitAll() // Allow login and registration without authentication
                 .antMatchers("/h2-console/**").permitAll() // Allow access to H2 console
                 .anyRequest().authenticated()
                 .and()
