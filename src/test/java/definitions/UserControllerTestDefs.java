@@ -1,6 +1,7 @@
 package definitions;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
@@ -12,6 +13,8 @@ import org.junit.Assert;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.web.client.HttpClientErrorException;
 
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 public class UserControllerTestDefs {
@@ -63,6 +66,18 @@ public class UserControllerTestDefs {
             response = request.get(BASE_URL + port + "/rooms");
 
             Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("The User receives a list of Rooms in the database")
+    public void receiveRooms() throws JSONException {
+        logger.info("Calling: The User receives a list of Rooms in the database");
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            List<Map<String, String>> rooms = jsonPath.get("data");
+            Assert.assertEquals(rooms.size(), 3);  // number of Rooms created in Seed Data
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
