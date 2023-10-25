@@ -2,7 +2,6 @@ package com.example.simplechatbackend.security;
 
 import com.example.simplechatbackend.model.User;
 import com.example.simplechatbackend.service.AuthService;
-import com.example.simplechatbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,10 +15,10 @@ public class MyUserDetailsService implements UserDetailsService {
 
     /**
      * Injects an instance of UserService in MyUserDetailsService
-     * @param userService Service used to access a User from the database.
+     * @param authService Service used to access a User from the database.
      */
     @Autowired
-    public void setUserService(AuthService authService) {
+    public void setAuthService(AuthService authService) {
         this.authService = authService;
     }
 
