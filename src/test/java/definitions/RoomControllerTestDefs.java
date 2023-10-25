@@ -33,6 +33,7 @@ public class RoomControllerTestDefs {
     @Given("The User is logged in")
     public void theUserIsLoggedIn() throws JSONException {
         logger.info("Calling: The User is logged in");
+
         try {
             RestAssured.baseURI = BASE_URL;
             RequestSpecification request = RestAssured.given();
@@ -57,6 +58,7 @@ public class RoomControllerTestDefs {
     @When("The User sends a request for all the Rooms in the database")
     public void requestRooms() throws JSONException {
         logger.info("Calling: The User sends a request for all the Rooms in the database");
+
         try {
             RestAssured.baseURI = BASE_URL;
             RequestSpecification request = RestAssured.given();
@@ -74,10 +76,29 @@ public class RoomControllerTestDefs {
     @Then("The User receives a list of Rooms in the database")
     public void receiveRooms() throws JSONException {
         logger.info("Calling: The User receives a list of Rooms in the database");
+
         try {
             JsonPath jsonPath = response.jsonPath();
             List<Map<String, String>> rooms = jsonPath.get("data");
             Assert.assertEquals(rooms.size(), 3);  // number of Rooms created in Seed Data
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("The User tries to create a new Room")
+    public void createRoom() throws JSONException {
+        logger.info("Calling: The User tries to create a new Room");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.post(BASE_URL + port + "/rooms");
+
+            Assert.assertEquals(201, response.getStatusCode());
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
