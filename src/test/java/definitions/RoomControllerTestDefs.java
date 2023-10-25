@@ -103,4 +103,17 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Then("The New Room is created")
+    public void newRoomCreated() throws JSONException {
+        logger.info("Calling: The New Room is created");
+
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            List<Map<String, String>> rooms = jsonPath.get("data");
+            Assert.assertEquals(rooms.size(), 4);  // 3 rooms in SeedData, now should be 4
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
