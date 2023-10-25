@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomService {
 
-    private UserRepository userRepository;
-
     private RoomRepository roomRepository;
 
-    private ChatRepository chatRepository;
 }
