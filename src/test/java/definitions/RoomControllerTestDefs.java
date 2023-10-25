@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class UserControllerTestDefs {
+public class RoomControllerTestDefs {
 
     private static final Logger logger = Logger.getLogger(AuthControllerTestDefs.class.getName());
 
