@@ -39,7 +39,7 @@ public class RoomController {
 
     @PostMapping(path = "")
     public ResponseEntity<?> createRoom(@RequestBody Room room) {
-        Optional<Room> newRoom = roomService.createRoom();
+        Optional<Room> newRoom = roomService.createRoom(room);
         if(newRoom.isPresent()) {
             message.put("message", "Successfully registered new Room: " + room.getName());
             message.put("data", newRoom.get());

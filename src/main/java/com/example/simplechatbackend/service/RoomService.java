@@ -1,5 +1,6 @@
 package com.example.simplechatbackend.service;
 
+import com.example.simplechatbackend.exception.InformationAlreadyExistsException;
 import com.example.simplechatbackend.model.Room;
 import com.example.simplechatbackend.repository.ChatRepository;
 import com.example.simplechatbackend.repository.RoomRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RoomService {
@@ -21,5 +23,14 @@ public class RoomService {
 
     public List<Room> getAllBooks() {
         return roomRepository.findAll();
+    }
+
+    public Optional<Room> createRoom(Room room) {
+        Optional<Room> roomOptional = roomRepository.findByName(room.getName());
+        if (roomOptional.isEmpty()) {
+            return Optional.of(roomRepository.save(room));
+        } else {
+            throw new InformationAlreadyExistsException("Room with name " + room.getName() + " already exists.");
+        }
     }
 }
