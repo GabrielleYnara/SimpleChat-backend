@@ -1,6 +1,7 @@
 package com.example.simplechatbackend.seed;
 
 import com.example.simplechatbackend.model.User;
+import com.example.simplechatbackend.repository.RoomRepository;
 import com.example.simplechatbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,10 +16,14 @@ public class SeedData implements CommandLineRunner {
 
     private final UserRepository userRepository;
 
+    private final RoomRepository roomRepository;
+
     @Autowired
-    public SeedData(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public SeedData(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository
+    , RoomRepository roomRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.roomRepository = roomRepository;
     }
 
     @Override
