@@ -50,4 +50,21 @@ public class UserControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @When("The User sends a request for all the Rooms in the database")
+    public void requestRooms() throws JSONException {
+        logger.info("Calling: The User sends a request for all the Rooms in the database");
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.get(BASE_URL + port + "/rooms");
+
+            Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
