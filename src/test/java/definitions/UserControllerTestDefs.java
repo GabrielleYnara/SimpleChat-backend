@@ -1,16 +1,18 @@
 package definitions;
 
-import com.example.simplechatbackend.SimpleChatBackendApplication;
 import io.cucumber.java.en.Given;
-import io.cucumber.spring.CucumberContextConfiguration;
+import io.cucumber.java.en.When;
+import io.restassured.RestAssured;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import org.springframework.boot.test.context.SpringBootTest;
+import io.restassured.specification.RequestSpecification;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.junit.Assert;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.logging.Logger;
-
-@CucumberContextConfiguration
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = SimpleChatBackendApplication.class)
 
 public class UserControllerTestDefs {
 
@@ -23,7 +25,29 @@ public class UserControllerTestDefs {
 
     private static Response response;
 
+    private static String jwt;
+
     @Given("The User is logged in")
-    public void theUserIsLoggedIn() {
+    public void theUserIsLoggedIn() throws JSONException {
+        logger.info("Calling: The User is logged in");
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("username", "bobmyers");
+            requestBody.put("password", "password1");
+            request.header("Content-Type", "application/json");
+
+            response = request.body(requestBody.toString()).post(BASE_URL + port + "/auth/login");
+
+            Assert.assertEquals(200, response.getStatusCode());
+
+            JsonPath jsonPath = response.jsonPath();
+            jwt = jsonPath.get("jwt");
+
+            Assert.assertNotEquals(jwt, ("Authentication Failed"));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
     }
 }
