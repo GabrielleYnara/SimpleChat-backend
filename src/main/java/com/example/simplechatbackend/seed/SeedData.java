@@ -1,7 +1,9 @@
 package com.example.simplechatbackend.seed;
 
+import com.example.simplechatbackend.model.Chat;
 import com.example.simplechatbackend.model.Room;
 import com.example.simplechatbackend.model.User;
+import com.example.simplechatbackend.repository.ChatRepository;
 import com.example.simplechatbackend.repository.RoomRepository;
 import com.example.simplechatbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,15 @@ public class SeedData implements CommandLineRunner {
 
     private final RoomRepository roomRepository;
 
+    private final ChatRepository chatRepository;
+
     @Autowired
-    public SeedData(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository
-    , RoomRepository roomRepository) {
+    public SeedData(@Lazy PasswordEncoder passwordEncoder, UserRepository userRepository,
+                    RoomRepository roomRepository, ChatRepository chatRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.roomRepository = roomRepository;
+        this.chatRepository = chatRepository;
     }
 
     @Override
@@ -53,6 +58,26 @@ public class SeedData implements CommandLineRunner {
             Room room3 = new Room();
             room3.setName("Horses");
             roomRepository.save(room3);
+        }
+
+        if (chatRepository.count() == 0) {
+            Chat chat1 = new Chat();
+            chat1.setRoom(roomRepository.findById(1L).get());
+            chat1.setUser(userRepository.findById(1L).get());
+            chat1.setMessage("I love dogs!");
+            chatRepository.save(chat1);
+
+            Chat chat2 = new Chat();
+            chat1.setRoom(roomRepository.findById(1L).get());
+            chat1.setUser(userRepository.findById(2L).get());
+            chat1.setMessage("Me too!");
+            chatRepository.save(chat2);
+
+            Chat chat3 = new Chat();
+            chat1.setRoom(roomRepository.findById(1L).get());
+            chat1.setUser(userRepository.findById(1L).get());
+            chat1.setMessage("My favorites are Samoyeds!");
+            chatRepository.save(chat3);
         }
     }
 }
