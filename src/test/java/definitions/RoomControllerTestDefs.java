@@ -128,7 +128,6 @@ public class RoomControllerTestDefs {
             RestAssured.baseURI = BASE_URL;
             RequestSpecification request = RestAssured.given();
             JSONObject requestBody = new JSONObject();
-            requestBody.put("id", "1");
 
             request.header("Content-Type", "application/json");
             request.header("Authorization", "Bearer " + jwt);
@@ -139,9 +138,8 @@ public class RoomControllerTestDefs {
 
             JsonPath jsonPath = response.jsonPath();
             Assert.assertEquals(jsonPath.get("message"), ("Success!"));
-            logger.info(jsonPath.get("data").toString());
             Assert.assertNotNull(jsonPath.get("data"));
-//            Assert.assertEquals(jsonPath.get("data.id"), 1);
+            Assert.assertEquals(jsonPath.get("data.name"), "Dogs");
 
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
