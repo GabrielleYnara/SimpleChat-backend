@@ -81,4 +81,30 @@ public class RoomService {
             throw new InformationNotFoundException("Room with id " + roomId + " not found.");
         }
     }
+
+    public Optional<Chat> updateChatById(String jwt, Long roomId, Long chatId, Chat chat) {
+        String userNameFromJwtToken = jwtUtils.getUserNameFromJwtToken(jwt.substring(7));
+        Optional<User> user = Optional.of(userRepository.findUserByUsername(userNameFromJwtToken));
+        Optional<Room> roomOptional = roomRepository.findById(roomId);
+        Optional<Chat> origChat = chatRepository.findById(chatId);
+
+        if (origChat.isPresent()) {
+            if (!origChat.get().getUser().getId().equals(user.get().getId())) {
+                throw new InformationNotFoundException("Chat with id: " + chatId + " does not belong to current User.");
+            }
+        } else {
+            throw new InformationNotFoundException("Chat with id: " + chatId + " not found.");
+        }
+
+        if (roomOptional.isPresent()) {
+            if (chat.getMessage().equals(origChat.get().getMessage())) {
+                throw new InformationAlreadyExistsException("Chat with id: " + chatId + " already contains this message.");
+            } else {
+                origChat.get().setMessage(chat.getMessage());
+                return Optional.of(chatRepository.save(origChat.get()));
+            }
+        } else {
+            throw new InformationNotFoundException("Room with id " + roomId + " not found.");
+        }
+    }
 }
