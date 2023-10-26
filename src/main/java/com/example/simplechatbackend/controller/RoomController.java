@@ -49,4 +49,17 @@ public class RoomController {
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
+
+    @GetMapping(path = "/{roomId}")
+    public ResponseEntity<?> getRoomById(@PathVariable(value = "roomId") Long roomId) {
+        Optional<Room> room = roomService.getRoomById(roomId);
+        if (room.isPresent()) {
+            message.put("message", "Success!");
+            message.put("data", room.get());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Room with id " + roomId + " not found.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
 }
