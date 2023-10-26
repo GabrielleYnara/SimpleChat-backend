@@ -77,6 +77,20 @@ public class RoomController {
             message.put("message", "Room with id " + roomId + " not found.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
+    }
 
+    @PutMapping(path = "/{roomId}/chats/{chatId}")
+    public ResponseEntity<?> updateChatById(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                            @PathVariable(value = "roomId") Long roomId,
+                                            @PathVariable(value = "chatId") Long chatId, @RequestBody Chat chat) {
+        Optional<Chat> updateChat = roomService.updateChatById(jwt, roomId, chatId, chat);
+        if (updateChat.isPresent()) {
+            message.put("message", "Successfully updated Chat with id: " + updateChat.get().getId());
+            message.put("data", updateChat.get());
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } else {
+            message.put("message", "Room with id " + roomId + " not found or this Chat does not belong to current User.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
     }
 }
