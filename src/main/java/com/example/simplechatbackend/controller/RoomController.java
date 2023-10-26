@@ -109,18 +109,16 @@ public class RoomController {
         }
     }
 
-    @GetMapping(path = "/{roomId}/chats/{chatId}")
-    public ResponseEntity<?> getChatById(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
-                                            @PathVariable(value = "roomId") Long roomId,
-                                            @PathVariable(value = "chatId") Long chatId) {
-        Optional<Chat> chat = roomService.getChatById(jwt, roomId, chatId);
-        if (chat.isPresent()) {
-            message.put("message", "Successfully found Chat with id: " + chat.get().getId());
-            message.put("data", chat.get());
-            message.put("data.username", chat.get().getUser().getUsername());
+    @GetMapping(path = "/{roomId}/chats")
+    public ResponseEntity<?> getChatsUsers(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                            @PathVariable(value = "roomId") Long roomId) {
+        List<String> usernames = roomService.getChatsUsers(jwt, roomId);
+        if (!usernames.isEmpty()) {
+            message.put("message", "Successfully found Chats for Room with id: " + roomId);
+            message.put("data", usernames);
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
-            message.put("message", "This Chat does not belong to current User.");
+            message.put("message", "This Room has no Chats.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }

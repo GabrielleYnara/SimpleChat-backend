@@ -12,6 +12,7 @@ import com.example.simplechatbackend.security.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -130,18 +131,12 @@ public class RoomService {
         }
     }
 
-    public Optional<Chat> getChatById(String jwt, Long roomId, Long chatId) {
-        String userNameFromJwtToken = jwtUtils.getUserNameFromJwtToken(jwt.substring(7));
-        Optional<User> user = Optional.of(userRepository.findUserByUsername(userNameFromJwtToken));
-        Optional<Chat> origChat = chatRepository.findById(chatId);
-
-        if (origChat.isPresent()) {
-            if (!origChat.get().getUser().getId().equals(user.get().getId())) {
-                throw new InformationNotFoundException("Chat with id: " + chatId + " does not belong to current User.");
-            }
-        } else {
-            throw new InformationNotFoundException("Chat with id: " + chatId + " not found.");
+    public List<String> getChatsUsers(String jwt, Long roomId) {
+        Optional<Room> room = roomRepository.findById(roomId);
+        List<String> usernames = new ArrayList<>();
+        for(Chat chat: room.get().getChatList()) {
+            usernames.add(chat.getUser().getUsername());
         }
-        return origChat;
+        return usernames;
     }
 }
