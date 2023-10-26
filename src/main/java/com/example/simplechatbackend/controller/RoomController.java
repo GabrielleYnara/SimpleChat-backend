@@ -93,4 +93,19 @@ public class RoomController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping(path = "/{roomId}/chats/{chatId}")
+    public ResponseEntity<?> deleteChatById(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                            @PathVariable(value = "roomId") Long roomId,
+                                            @PathVariable(value = "chatId") Long chatId) {
+        Optional<Chat> deleteChat = roomService.updateChatById(jwt, roomId, chatId);
+        if (deleteChat.isPresent()) {
+            message.put("message", "Successfully deleted Chat with id: " + deleteChat.get().getId());
+            message.put("data", deleteChat.get());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Room with id " + roomId + " not found or this Chat does not belong to current User.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
 }
