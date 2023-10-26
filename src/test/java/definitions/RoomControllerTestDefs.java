@@ -229,4 +229,24 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @When("The User tries to delete a Chat that belongs to them")
+    public void deleteChat() throws JSONException {
+        logger.info("The User tries to delete a Chat that belongs to them");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.body(requestBody.toString()).delete(BASE_URL + port + "/rooms/1/chats/1");
+
+            Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
