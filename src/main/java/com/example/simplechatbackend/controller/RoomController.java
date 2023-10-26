@@ -58,6 +58,7 @@ public class RoomController {
         if (room.isPresent()) {
             message.put("message", "Success!");
             message.put("data", room.get());
+            message.put("name", room.get().getName());
             return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
             message.put("message", "Room with id " + roomId + " not found.");
