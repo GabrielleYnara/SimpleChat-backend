@@ -95,8 +95,10 @@ public class RoomControllerTestDefs {
             RequestSpecification request = RestAssured.given();
             request.header("Content-Type", "application/json");
             request.header("Authorization", "Bearer " + jwt);
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("name", "Rabbits");
 
-            response = request.post(BASE_URL + port + "/rooms");
+            response = request.body(requestBody.toString()).post(BASE_URL + port + "/rooms");
 
             Assert.assertEquals(201, response.getStatusCode());
         } catch (HttpClientErrorException e) {
@@ -110,8 +112,8 @@ public class RoomControllerTestDefs {
 
         try {
             JsonPath jsonPath = response.jsonPath();
-            List<Map<String, String>> rooms = jsonPath.get("data");
-            Assert.assertEquals(rooms.size(), 4);  // 3 rooms in SeedData, now should be 4
+            Assert.assertEquals(jsonPath.get("message"), ("Successfully registered new Room: Rabbits"));
+            Assert.assertNotNull(jsonPath.get("data"));
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
