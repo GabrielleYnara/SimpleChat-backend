@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/*")
 @RequestMapping(path = "/auth")     //localhost:8081/auth
 public class AuthController {
 
