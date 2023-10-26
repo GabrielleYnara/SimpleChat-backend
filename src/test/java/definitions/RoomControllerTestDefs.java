@@ -132,7 +132,7 @@ public class RoomControllerTestDefs {
             request.header("Content-Type", "application/json");
             request.header("Authorization", "Bearer " + jwt);
 
-            response = request.body(requestBody.toString()).get(BASE_URL + port + "/rooms/1");
+            response = request.get(BASE_URL + port + "/rooms/1");
 
             Assert.assertEquals(200, response.getStatusCode());
 
@@ -232,7 +232,7 @@ public class RoomControllerTestDefs {
 
     @When("The User tries to delete a Chat that belongs to them")
     public void deleteChat() throws JSONException {
-        logger.info("The User tries to delete a Chat that belongs to them");
+        logger.info("Calling: The User tries to delete a Chat that belongs to them");
 
         try {
             RestAssured.baseURI = BASE_URL;
@@ -245,6 +245,37 @@ public class RoomControllerTestDefs {
             response = request.body(requestBody.toString()).delete(BASE_URL + port + "/rooms/1/chats/1");
 
             Assert.assertEquals(200, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Then("The Chat is deleted")
+    public void chatIsDeleted() throws JSONException {
+        logger.info("Calling: The Chat is deleted");
+
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            Assert.assertNotNull(jsonPath.get("data"));
+            Assert.assertEquals(jsonPath.get("message"), ("Successfully deleted Chat with id: 1"));
+            Assert.assertEquals(jsonPath.get("data.message"), "I loooooove dogs!");
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+            response = request.get(BASE_URL + port + "/rooms/1");
+
+            JsonPath jsonPath = response.jsonPath();
+            List<Map<String, String>> chats = jsonPath.get("data.chatList");
+            Assert.assertEquals(chats.size(), 3);  //create new Chat and delete 1 chat, so number should match original Chats in Seed Data
+            Assert.assertNotEquals(chats.get(0).get("message"), "I loooooove dogs!");  //modified Chat 1, so make sure the new 1st item doesn't match Chat 1
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
