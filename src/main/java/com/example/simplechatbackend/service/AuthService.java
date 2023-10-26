@@ -30,8 +30,6 @@ public class AuthService {
 
     private final AuthenticationManager authenticationManager;
 
-    Logger logger  = Logger.getLogger(AuthService.class.getName());
-
     @Autowired
     public AuthService(UserRepository userRepository, @Lazy PasswordEncoder passwordEncoder,
                        JWTUtils jwtUtils, @Lazy AuthenticationManager authenticationManager) {

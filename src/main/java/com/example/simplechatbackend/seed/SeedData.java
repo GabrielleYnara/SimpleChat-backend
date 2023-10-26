@@ -44,6 +44,11 @@ public class SeedData implements CommandLineRunner {
             user2.setUsername("susiemyers");
             user2.setPassword(passwordEncoder.encode("password2"));
             userRepository.save(user2);
+
+            User guest = new User();
+            guest.setUsername("Guest");
+            guest.setPassword(passwordEncoder.encode("passwprd"));
+            userRepository.save(guest);
         }
 
         if (roomRepository.count() == 0) {
