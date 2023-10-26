@@ -68,15 +68,15 @@ public class SeedData implements CommandLineRunner {
             chatRepository.save(chat1);
 
             Chat chat2 = new Chat();
-            chat1.setRoom(roomRepository.findById(1L).get());
-            chat1.setUser(userRepository.findById(2L).get());
-            chat1.setMessage("Me too!");
+            chat2.setRoom(roomRepository.findById(1L).get());
+            chat2.setUser(userRepository.findById(2L).get());
+            chat2.setMessage("Me too!");
             chatRepository.save(chat2);
 
             Chat chat3 = new Chat();
-            chat1.setRoom(roomRepository.findById(1L).get());
-            chat1.setUser(userRepository.findById(1L).get());
-            chat1.setMessage("My favorites are Samoyeds!");
+            chat3.setRoom(roomRepository.findById(1L).get());
+            chat3.setUser(userRepository.findById(1L).get());
+            chat3.setMessage("My favorites are Samoyeds!");
             chatRepository.save(chat3);
         }
     }
