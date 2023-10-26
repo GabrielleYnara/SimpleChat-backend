@@ -108,4 +108,20 @@ public class RoomController {
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping(path = "/{roomId}/chats/{chatId}")
+    public ResponseEntity<?> getChatById(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                            @PathVariable(value = "roomId") Long roomId,
+                                            @PathVariable(value = "chatId") Long chatId) {
+        Optional<Chat> chat = roomService.getChatById(jwt, roomId, chatId);
+        if (chat.isPresent()) {
+            message.put("message", "Successfully found Chat with id: " + chat.get().getId());
+            message.put("data", chat.get());
+            message.put("data.username", chat.get().getUser().getUsername());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "This Chat does not belong to current User.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+    }
 }
