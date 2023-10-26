@@ -1,6 +1,7 @@
 package com.example.simplechatbackend.service;
 
 import com.example.simplechatbackend.exception.InformationAlreadyExistsException;
+import com.example.simplechatbackend.exception.InformationNotFoundException;
 import com.example.simplechatbackend.model.Room;
 import com.example.simplechatbackend.repository.ChatRepository;
 import com.example.simplechatbackend.repository.RoomRepository;
@@ -31,6 +32,15 @@ public class RoomService {
             return Optional.of(roomRepository.save(room));
         } else {
             throw new InformationAlreadyExistsException("Room with name " + room.getName() + " already exists.");
+        }
+    }
+
+    public Optional<Room> getRoomById(Long roomId) {
+        Optional<Room> roomOptional = roomRepository.findById(roomId);
+        if (roomOptional.isPresent()) {
+            return roomOptional;
+        } else {
+            throw new InformationNotFoundException("Room with id " + roomId + " not found.");
         }
     }
 }
