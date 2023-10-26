@@ -8,6 +8,7 @@ Feature: UserController Endpoints Test
     Then The New Room is created
 
   Scenario: User is able to retrieve a list of all Chats for a Room and create, update, delete Chats for a Room
+    Given The User is logged in
     Given The User is inside a specific Room
     Then The User should be able to get a list of all Chats for that Room
     When The User tries to create a new Chat
