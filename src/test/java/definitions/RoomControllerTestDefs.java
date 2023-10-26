@@ -170,7 +170,6 @@ public class RoomControllerTestDefs {
             RequestSpecification request = RestAssured.given();
             JSONObject requestBody = new JSONObject();
             requestBody.put("message", "Mine are Golden Retrievers!");
-            requestBody.put("jwt", jwt);
 
             request.header("Content-Type", "application/json");
             request.header("Authorization", "Bearer " + jwt);
@@ -191,6 +190,27 @@ public class RoomControllerTestDefs {
             JsonPath jsonPath = response.jsonPath();
             Assert.assertNotNull(jsonPath.get("data"));
             Assert.assertEquals(jsonPath.get("message"), ("Successfully created new Chat: Mine are Golden Retrievers!"));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @When("The User tries to update a Chat that belongs to them")
+    public void updateChat() throws JSONException {
+        logger.info("Calling: The User tries to update a Chat that belongs to them");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("message", "I loooooove dogs!");
+
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.body(requestBody.toString()).put(BASE_URL + port + "/rooms/1/chats/1");
+
+            Assert.assertEquals(200, response.getStatusCode());
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
