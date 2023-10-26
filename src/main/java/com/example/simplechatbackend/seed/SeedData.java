@@ -47,7 +47,7 @@ public class SeedData implements CommandLineRunner {
 
             User guest = new User();
             guest.setUsername("Guest");
-            guest.setPassword(passwordEncoder.encode("passwprd"));
+            guest.setPassword(passwordEncoder.encode("password"));
             userRepository.save(guest);
         }
 
