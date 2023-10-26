@@ -276,6 +276,7 @@ public class RoomControllerTestDefs {
             List<Map<String, String>> chats = jsonPath.get("data.chatList");
             Assert.assertEquals(chats.size(), 3);  //create new Chat and delete 1 chat, so number should match original Chats in Seed Data
             Assert.assertNotEquals(chats.get(0).get("message"), "I loooooove dogs!");  //modified Chat 1, so make sure the new 1st item doesn't match Chat 1
+            Assert.assertEquals(chats.get(0).get("message"), "Me too!");
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }
