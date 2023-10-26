@@ -67,12 +67,12 @@ public class RoomController {
 
     @PostMapping(path = "/{roomId}")
     public ResponseEntity<?> createChatInRoom(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
-                                              @PathVariable(value = "roomId") Long roomId, Chat chat) {
+                                              @PathVariable(value = "roomId") Long roomId, @RequestBody Chat chat) {
         Optional<Chat> newChat = roomService.createChatInRoom(jwt, roomId, chat);
         if (newChat.isPresent()) {
             message.put("message", "Successfully created new Chat: " + chat.getMessage());
             message.put("data", newChat.get());
-            return new ResponseEntity<>(message, HttpStatus.OK);
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
         } else {
             message.put("message", "Room with id " + roomId + " not found.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);

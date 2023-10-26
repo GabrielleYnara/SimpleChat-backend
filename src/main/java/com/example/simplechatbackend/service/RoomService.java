@@ -69,7 +69,7 @@ public class RoomService {
     }
 
     public Optional<Chat> createChatInRoom(String jwt, Long roomId, Chat chat) {
-        String userNameFromJwtToken = jwtUtils.getUserNameFromJwtToken(jwt);
+        String userNameFromJwtToken = jwtUtils.getUserNameFromJwtToken(jwt.substring(7));
         Optional<User> user = Optional.of(userRepository.findUserByUsername(userNameFromJwtToken));
         Optional<Room> roomOptional = roomRepository.findById(roomId);
 

@@ -175,7 +175,7 @@ public class RoomControllerTestDefs {
             request.header("Content-Type", "application/json");
             request.header("Authorization", "Bearer " + jwt);
 
-            response = request.body(requestBody.toString()).get(BASE_URL + port + "/rooms/1");
+            response = request.body(requestBody.toString()).post(BASE_URL + port + "/rooms/1");
 
             Assert.assertEquals(201, response.getStatusCode());
         } catch (HttpClientErrorException e) {
