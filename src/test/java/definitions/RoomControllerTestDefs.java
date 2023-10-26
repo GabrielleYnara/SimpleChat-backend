@@ -119,4 +119,32 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Given("The User is inside a specific Room")
+    public void enterRoom() throws  JSONException {
+        logger.info("Calling: The User is inside a specific Room");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("id", "1");
+
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.body(requestBody.toString()).get(BASE_URL + port + "/rooms/1");
+
+            Assert.assertEquals(200, response.getStatusCode());
+
+            JsonPath jsonPath = response.jsonPath();
+            Assert.assertEquals(jsonPath.get("message"), ("Success!"));
+            logger.info(jsonPath.get("data").toString());
+            Assert.assertNotNull(jsonPath.get("data"));
+//            Assert.assertEquals(jsonPath.get("data.id"), 1);
+
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
