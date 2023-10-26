@@ -4,7 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "rooms")
@@ -20,7 +20,7 @@ public class Room {
 
     @OneToMany(mappedBy = "room")
     @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Chat> chatList;
+    private List<Chat> chatList;
 
     public Room() {
     }
@@ -46,11 +46,11 @@ public class Room {
         this.name = name;
     }
 
-    public Set<Chat> getChatList() {
+    public List<Chat> getChatList() {
         return chatList;
     }
 
-    public void setChatList(Set<Chat> chatList) {
+    public void setChatList(List<Chat> chatList) {
         this.chatList = chatList;
     }
 
