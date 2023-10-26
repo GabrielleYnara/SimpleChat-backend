@@ -215,4 +215,17 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Then("The Chat is updated")
+    public void chatIsUpdated() throws JSONException {
+        logger.info("Calling: The Chat is updated");
+
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            Assert.assertNotNull(jsonPath.get("data"));
+            Assert.assertEquals(jsonPath.get("message"), ("Successfully updated Chat with id: 1"));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
