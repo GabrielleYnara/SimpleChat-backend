@@ -41,7 +41,7 @@ public class RoomController {
     public ResponseEntity<?> createRoom(@RequestBody Room room) {
         Optional<Room> newRoom = roomService.createRoom(room);
         if(newRoom.isPresent()) {
-            message.put("message", "Successfully registered new Room: " + room.getName());
+            message.put("message", "Successfully created new Room: " + room.getName());
             message.put("data", newRoom.get());
             return new ResponseEntity<>(message, HttpStatus.CREATED);
         } else {
