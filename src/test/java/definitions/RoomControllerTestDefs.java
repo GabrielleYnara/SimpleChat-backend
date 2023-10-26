@@ -145,4 +145,19 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Then("The User should be able to get a list of all Chats for that Room")
+    public void getChatList() throws JSONException {
+        logger.info("Calling: The User should be able to get a list of all Chats for that Room");
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            Assert.assertNotNull(jsonPath.get("data.chatList"));
+
+            List<Map<String, String>> chats = jsonPath.get("data.chatList");
+            Assert.assertEquals(chats.size(), 3);  //number of Chats inside Room 1 in SeedData
+            Assert.assertEquals(chats.get(0).get("message"), "I love dogs!");
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
