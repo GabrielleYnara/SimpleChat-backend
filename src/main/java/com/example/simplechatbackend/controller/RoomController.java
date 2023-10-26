@@ -1,8 +1,10 @@
 package com.example.simplechatbackend.controller;
 
+import com.example.simplechatbackend.model.Chat;
 import com.example.simplechatbackend.model.Room;
 import com.example.simplechatbackend.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -61,5 +63,20 @@ public class RoomController {
             message.put("message", "Room with id " + roomId + " not found.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping(path = "/{roomId}")
+    public ResponseEntity<?> createChatInRoom(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
+                                              @PathVariable(value = "roomId") Long roomId, Chat chat) {
+        Optional<Chat> newChat = roomService.createChatInRoom(jwt, roomId, chat);
+        if (newChat.isPresent()) {
+            message.put("message", "Successfully created new Chat: " + chat.getMessage());
+            message.put("data", newChat.get());
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        } else {
+            message.put("message", "Room with id " + roomId + " not found.");
+            return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
+        }
+
     }
 }
