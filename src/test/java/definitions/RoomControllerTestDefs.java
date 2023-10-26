@@ -182,4 +182,17 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @Then("The New Chat is created")
+    public void newChatCreated() throws JSONException {
+        logger.info("Calling: The New Chat is created");
+
+        try {
+            JsonPath jsonPath = response.jsonPath();
+            Assert.assertNotNull(jsonPath.get("data"));
+            Assert.assertEquals(jsonPath.get("message"), ("Successfully created new Chat: Mine are Golden Retrievers!"));
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
