@@ -98,7 +98,7 @@ public class RoomController {
     public ResponseEntity<?> deleteChatById(@RequestHeader(HttpHeaders.AUTHORIZATION) String jwt,
                                             @PathVariable(value = "roomId") Long roomId,
                                             @PathVariable(value = "chatId") Long chatId) {
-        Optional<Chat> deleteChat = roomService.updateChatById(jwt, roomId, chatId);
+        Optional<Chat> deleteChat = roomService.deleteChatById(jwt, roomId, chatId);
         if (deleteChat.isPresent()) {
             message.put("message", "Successfully deleted Chat with id: " + deleteChat.get().getId());
             message.put("data", deleteChat.get());
