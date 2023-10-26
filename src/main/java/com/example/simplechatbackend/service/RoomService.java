@@ -4,6 +4,7 @@ import com.example.simplechatbackend.exception.InformationAlreadyExistsException
 import com.example.simplechatbackend.exception.InformationNotFoundException;
 import com.example.simplechatbackend.model.Chat;
 import com.example.simplechatbackend.model.Room;
+import com.example.simplechatbackend.model.User;
 import com.example.simplechatbackend.repository.ChatRepository;
 import com.example.simplechatbackend.repository.RoomRepository;
 import com.example.simplechatbackend.repository.UserRepository;
@@ -17,11 +18,18 @@ import java.util.Optional;
 @Service
 public class RoomService {
 
+    private UserRepository userRepository;
+
     private RoomRepository roomRepository;
 
     private ChatRepository chatRepository;
 
     private JWTUtils jwtUtils;
+
+    @Autowired
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Autowired
     public void setRoomRepository(RoomRepository roomRepository) {
