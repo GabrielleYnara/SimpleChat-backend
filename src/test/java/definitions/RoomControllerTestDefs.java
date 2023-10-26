@@ -160,4 +160,26 @@ public class RoomControllerTestDefs {
             e.printStackTrace();
         }
     }
+
+    @When("The User tries to create a new Chat")
+    public void createChat() throws JSONException {
+        logger.info("Calling: The User tries to create a new Chat");
+
+        try {
+            RestAssured.baseURI = BASE_URL;
+            RequestSpecification request = RestAssured.given();
+            JSONObject requestBody = new JSONObject();
+            requestBody.put("message", "Mine are Golden Retrievers!");
+            requestBody.put("jwt", jwt);
+
+            request.header("Content-Type", "application/json");
+            request.header("Authorization", "Bearer " + jwt);
+
+            response = request.body(requestBody.toString()).get(BASE_URL + port + "/rooms/1");
+
+            Assert.assertEquals(201, response.getStatusCode());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
+        }
+    }
 }
