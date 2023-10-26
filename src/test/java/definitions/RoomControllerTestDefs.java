@@ -224,6 +224,7 @@ public class RoomControllerTestDefs {
             JsonPath jsonPath = response.jsonPath();
             Assert.assertNotNull(jsonPath.get("data"));
             Assert.assertEquals(jsonPath.get("message"), ("Successfully updated Chat with id: 1"));
+            Assert.assertEquals(jsonPath.get("data.message"), "I loooooove dogs!");
         } catch (HttpClientErrorException e) {
             e.printStackTrace();
         }

@@ -87,7 +87,7 @@ public class RoomController {
         if (updateChat.isPresent()) {
             message.put("message", "Successfully updated Chat with id: " + updateChat.get().getId());
             message.put("data", updateChat.get());
-            return new ResponseEntity<>(message, HttpStatus.CREATED);
+            return new ResponseEntity<>(message, HttpStatus.OK);
         } else {
             message.put("message", "Room with id " + roomId + " not found or this Chat does not belong to current User.");
             return new ResponseEntity<>(message, HttpStatus.NOT_FOUND);
