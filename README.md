@@ -18,11 +18,9 @@
 ### In command line: Navigate to project directory /simplechat
 ### Run “mvn spring-boot:run” in command line to start backend
 
-## User Stories
-### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20User%20Stories.pdf)]
+## [User Stories(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20User%20Stories.pdf)]
 
-## Project Roadmap
-### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)]
+## [Project Roadmap(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)]
 
 ## ERD Diagram
-[SimpleChat-room-page.png](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-room-page.png)
+(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-erd.jpg)
