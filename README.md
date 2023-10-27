@@ -19,3 +19,7 @@
 ### Run “mvn spring-boot:run” in command line to start backend
 
 ## User Stories
+### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20User%20Stories.pdf)]
+
+## Project Roadmap
+### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)]
