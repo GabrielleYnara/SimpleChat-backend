@@ -23,4 +23,4 @@
 ## [Project Roadmap](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)
 
 ## ERD Diagram
-(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-erd.jpg)
+![ERD](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-erd.jpg)
