@@ -25,4 +25,4 @@
 ### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)]
 
 ## ERD Diagram
-/SimpleChat-room-page.png
+[SimpleChat-room-page.png](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-room-page.png)
