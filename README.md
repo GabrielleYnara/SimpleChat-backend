@@ -24,3 +24,8 @@
 
 ## ERD Diagram
 ![ERD](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-erd.jpg)
+
+
+## Endpoints
+| Request Type | URL | Functionality | Access |
+|
