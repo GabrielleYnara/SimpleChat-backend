@@ -29,5 +29,13 @@
 ## Endpoints
 | Request Type | URL | Functionality | Access |
 | ------------ | --- | ------------- | ------ |
-| POST         | http://localhost:8081/auth/register | Create a new User account | public
+| POST | http://localhost:8081/auth/register | Create a new User account | public |
+| POST | http://localhost:8081/auth/login | Login a User and return a JWT | public |
+| GET | http://localhost:8081/rooms | Return a list of all Rooms in the database | private |
+| POST | http://localhost:8081/rooms | Create a new Room in the database | private |
+| GET | http://localhost:8081/rooms/{roomId} | Returns the Room with roomId | private |
+| POST | http://localhost:8081/rooms/{roomId} | Creates a new Chat in Room with roomId | private |
+| PUT | http://localhost:8081/rooms/{roomId}/chats/{chatId} | Updates Chat with chatId in database | private |
+| DELETE | http://localhost:8081/rooms/{roomId}/chats/{chatId} | Deletes Chat with chatId from database | private |
+| GET | http://localhost:8081/{roomId}/chats | Returns a list of the usernames associated with each Chat in Room with roomId | private |
 
