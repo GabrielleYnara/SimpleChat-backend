@@ -37,3 +37,8 @@
 | DELETE | http://localhost:8081/rooms/{roomId}/chats/{chatId} | Deletes Chat with chatId from database | private |
 | GET | http://localhost:8081/{roomId}/chats | Returns a list of the usernames associated with each Chat in Room with roomId | private |
 
+## Helpful Links used to solve specific problems encountered during the project.
+### https://docs.github.com/en/get-started/getting-started-with-git/managing-remote-repositories
+### https://www.tutorialspoint.com/how-to-solve-refusing-to-merge-unrelated-histories-in-git
+### https://www.baeldung.com/spring-rest-http-headers
+
