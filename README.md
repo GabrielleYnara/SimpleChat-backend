@@ -20,8 +20,6 @@
 
 ## [User Stories](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20User%20Stories.pdf)
 
-## [Project Roadmap](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)
-
 ## ERD Diagram
 ![ERD](https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat-erd.jpg)
 
