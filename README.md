@@ -29,3 +29,5 @@
 ## Endpoints
 | Request Type | URL | Functionality | Access |
 | ------------ | --- | ------------- | ------ |
+| POST         | http://localhost:8081/auth/register | Create a new User account | public
+
