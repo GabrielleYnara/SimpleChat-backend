@@ -28,4 +28,3 @@
 
 ## Endpoints
 | Request Type | URL | Functionality | Access |
-|
