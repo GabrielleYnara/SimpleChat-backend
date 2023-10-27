@@ -23,3 +23,6 @@
 
 ## Project Roadmap
 ### [(https://github.com/merrillhuang/SimpleChat-backend/blob/main/SimpleChat%20Roadmap.pdf)]
+
+## ERD Diagram
+/SimpleChat-room-page.png
